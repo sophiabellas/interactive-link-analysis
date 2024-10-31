@@ -1,0 +1,58 @@
+# Install pyvis
+!pip install pyvis
+
+from pyvis.network import Network
+from google.colab import files
+
+# Initialize Network
+net = Network(height='750px', width='100%', bgcolor='#ffffff', font_color='black')
+
+# Add Nodes and Edges (as previously defined)
+authors = ["Guy Claxton", "E.D. Hirsch", "Daisy Christodoulou", "John Sweller", "Jean Lave", "Etienne Wenger", "Dylan Wiliam", 
+           "Kathryn Ecclestone", "Dennis Hayes", "Matthew Taylor"]
+institutions = ["Michaela Community School", "National Reading Panel", "Education Endowment Foundation", "School 21", "Royal Society of Arts"]
+books_papers = ["Seven Myths about Education", "How Learning Happens", "The Future of Teaching", "Class War", "The Dangerous Rise of Therapeutic Education"]
+concepts = ["knowledge-rich curriculum", "direct instruction", "cognitive load theory", "epistemic apprenticeship", "character education", "therapeutic education"]
+
+# Add nodes with descriptions
+for author in authors:
+    net.add_node(author, label=author, title=f"{author}: Key author in educational theory.")
+for institution in institutions:
+    net.add_node(institution, label=institution, title=f"{institution}: Associated institution in educational practice.")
+for book in books_papers:
+    net.add_node(book, label=book, title=f"{book}: Influential educational work.")
+for concept in concepts:
+    net.add_node(concept, label=concept, title=f"{concept}: Core educational concept.")
+
+# Add edges with descriptions
+relationships = [
+    ("Guy Claxton", "The Future of Teaching"),
+    ("E.D. Hirsch", "Seven Myths about Education"),
+    ("Daisy Christodoulou", "Seven Myths about Education"),
+    ("John Sweller", "cognitive load theory"),
+    ("Jean Lave", "epistemic apprenticeship"),
+    ("Etienne Wenger", "epistemic apprenticeship"),
+    ("Dylan Wiliam", "How Learning Happens"),
+    ("Kathryn Ecclestone", "The Dangerous Rise of Therapeutic Education"),
+    ("Dennis Hayes", "The Dangerous Rise of Therapeutic Education"),
+    ("Matthew Taylor", "Royal Society of Arts"),
+    ("Guy Claxton", "knowledge-rich curriculum"),
+    ("Daisy Christodoulou", "direct instruction"),
+    ("Michaela Community School", "direct instruction"),
+    ("School 21", "character education"),
+    ("National Reading Panel", "Education Endowment Foundation"),
+    ("Education Endowment Foundation", "cognitive load theory"),
+    ("cognitive load theory", "knowledge-rich curriculum"),
+    ("epistemic apprenticeship", "character education"),
+    ("therapeutic education", "character education")
+]
+
+# Add edges to the network
+for src, dst in relationships:
+    net.add_edge(src, dst, title="Connected Entities")
+
+# Generate HTML file
+net.show("Link_Analysis_Interactive_Network.html")
+
+# Download the file to your local machine
+files.download("Link_Analysis_Interactive_Network.html")
